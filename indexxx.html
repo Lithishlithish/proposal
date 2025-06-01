@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be Mine?</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f9d5e5, #fcefee);
+      font-family: 'Montserrat', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      color: #5a2a4a;
+      position: relative;
+    }
+
+    .container, .second-page {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    h1, h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      margin-bottom: 0.5em;
+      animation: fadeInDown 1s forwards;
+      text-shadow: 0 0 10px #fff;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2em;
+      max-width: 90%;
+      animation: fadeInUp 1.2s forwards;
+      animation-delay: 0.5s;
+    }
+
+    .buttons {
+      width: 100%;
+      max-width: 320px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      animation: fadeIn 1.5s forwards;
+      animation-delay: 1.5s;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 15px 25px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+
+    #yesBtn {
+      background: #d64a6d;
+      color: white;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+    }
+
+    #noBtn {
+      background: #fff0f6;
+      color: #d64a6d;
+      border: 2px solid #d64a6d;
+      position: fixed;
+      z-index: 1000;
+    }
+
+    #noBtn:hover {
+      background: #fce7f0;
+    }
+
+    .second-page {
+      background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+      display: none;
+      flex-direction: column;
+    }
+
+    .second-page.active {
+      display: flex;
+      animation: fadeIn 2s ease;
+    }
+
+    .pulse-heart {
+      font-size: 3rem;
+      animation: pulse 1.5s infinite;
+      margin-top: 20px;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
+      background-size: contain;
+      animation: float 10s linear infinite;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.5); }
+      100% { transform: translateY(-100vh) scale(1); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    @media (max-width: 500px) {
+      h1, h2 {
+        font-size: 2.2rem;
+      }
+      button {
+        font-size: 1rem;
+        padding: 12px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- First Page -->
+<div class="container" id="mainPage">
+  <h1>Will You Be Mine Ash?</h1>
+  <p>I have something special to ask you Ash. Please choose your answer.</p>
+  <div class="buttons">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 🙈</button>
+  </div>
+</div>
+
+<!-- Second Page -->
+<div class="second-page" id="secondPage">
+  <h2>Yay! I can't wait for our adventures together 💕</h2>
+  <div class="pulse-heart">💗</div>
+</div>
+
+<!-- Floating Hearts -->
+<script>
+  for (let i = 0; i < 30; i++) {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+    heart.style.top = Math.random() * 100 + 'vh';
+    heart.style.opacity = Math.random();
+    document.body.appendChild(heart);
+  }
+</script>
+
+<!-- Button Logic -->
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const mainPage = document.getElementById('mainPage');
+  const secondPage = document.getElementById('secondPage');
+
+  function moveNoButton() {
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
+    const padding = 20;
+    const maxX = window.innerWidth - btnWidth - padding;
+    const maxY = window.innerHeight - btnHeight - padding;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  }
+
+  noBtn.addEventListener('mouseenter', moveNoButton);
+  noBtn.addEventListener('touchstart', e => {
+    e.preventDefault();
+    moveNoButton();
+  });
+
+  yesBtn.addEventListener('click', () => {
+    mainPage.style.display = 'none';
+    secondPage.classList.add('active');
+  });
+</script>
+
+</body>
+</html>
